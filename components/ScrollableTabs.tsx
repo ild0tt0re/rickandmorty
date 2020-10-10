@@ -5,9 +5,6 @@ import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
 import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
-import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined'
-import PermIdentityOutlinedIcon from '@material-ui/icons/PermIdentityOutlined'
-import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined'
 import SimpleList from './SimpleList'
 import CharacterLocationsTable from './CharacterLocationsTable'
 import CharacterEpisodesAccordions from './CharacterEpisodesAccordions'
@@ -30,11 +27,7 @@ function TabPanel(props: TabPanelProps) {
       aria-labelledby={`scrollable-force-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box p={1}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box p={1}>{children}</Box>}
     </div>
   )
 }
@@ -123,14 +116,10 @@ export default function ScrollableTabs({ info, locations, episodes }) {
       }
     }
 
-
     if (!Array.isArray(episodes)) {
       return [buildEpisodeItem(episodes)]
     }
-    return (
-      episodes &&
-      episodes.map((item) => (buildEpisodeItem(item)))
-    )
+    return episodes && episodes.map((item) => buildEpisodeItem(item))
   }
 
   const characterEpisodes = buildCharacterEpisodesList(episodes)

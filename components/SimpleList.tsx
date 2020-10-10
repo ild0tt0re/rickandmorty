@@ -30,13 +30,13 @@ export default function SimpleList({ items }) {
     <div className={classes.root}>
       <List component="nav" aria-label={items?.name}>
         {items?.map((item, index) => (
-          <>
+          <div key={index}>
             <ListItem button>
               <ListItemText primary={item?.name} />
               {item?.value}
             </ListItem>
             {index < items?.length - 1 && <Divider />}
-          </>
+          </div>
         ))}
       </List>
     </div>

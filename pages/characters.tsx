@@ -1,6 +1,12 @@
 import Pagination from '@material-ui/lab/Pagination'
 import Head from 'next/head'
-import { Button, Container, createStyles, Grid, makeStyles, Theme } from '@material-ui/core'
+import {
+  Container,
+  createStyles,
+  Grid,
+  makeStyles,
+  Theme,
+} from '@material-ui/core'
 import FullWidthGrid from '../components/FullWidthGrid'
 import CharacterDialog from '../components/CharacterDialog'
 import { useEffect } from 'react'
@@ -15,10 +21,20 @@ import {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      margin: '30px 0'
+      margin: '0',
+      position: 'sticky',
+      padding: 12,
+      bottom: 0,
+      backgroundColor: 'white',
+      boxShadow: '0 -1px 51px 0px rgba(0,0,0,0.55)',
     },
     ul: {
       justifyContent: 'center',
+    },
+    container: {
+      paddingLeft: '24px',
+      paddingRight: '24px',
+      minHeight: '100vh',
     }
   })
 )
@@ -57,7 +73,7 @@ export default function Characters() {
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Container>
+      <Container className={classes.container}>
         <Grid>
           <h1>Rick and Morty</h1>
         </Grid>
@@ -65,14 +81,14 @@ export default function Characters() {
           items={currentPageData?.characters}
           handleDialogOpen={openDialog}
         />
-        <Pagination
-          count={currentPageData?.info?.pages}
-          size="large"
-          onChange={onPageChange}
-          classes={{ul: classes.ul}}
-          className={classes.root}
-        />
       </Container>
+      <Pagination
+        count={currentPageData?.info?.pages}
+        size="large"
+        onChange={onPageChange}
+        classes={{ ul: classes.ul }}
+        className={classes.root}
+      />
       <CharacterDialog
         data={dialogData}
         handleClose={closeDialog}
