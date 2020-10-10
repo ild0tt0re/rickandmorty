@@ -5,11 +5,27 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import ScrollableTabs from './ScrollableTabs'
 import BadgeAvatar from './BadgeAvatar'
+import { createStyles, makeStyles, Theme } from '@material-ui/core'
+
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    paperWidthSm: {
+      width: 600,
+      height: 800,
+    }
+    /* '@media screen and (min-width: 600px)': {
+
+    }, */
+  })
+)
 
 export default function CharacterDialog({ data, open, handleClose }) {
   const { info, locations, episodes } = data || {}
+  const classes = useStyles()
 
   console.log('dialogData: ', data)
+
 
   return (
     <>
@@ -18,6 +34,7 @@ export default function CharacterDialog({ data, open, handleClose }) {
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        classes={{paperWidthSm: classes.paperWidthSm}}
       >
         <DialogContent>
           <BadgeAvatar image={info.image} altImage={info.name} status={info.status} />
