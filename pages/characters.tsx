@@ -2,7 +2,7 @@ import Pagination from '@material-ui/lab/Pagination'
 import Head from 'next/head'
 import { Button, Container, createStyles, Grid, makeStyles, Theme } from '@material-ui/core'
 import FullWidthGrid from '../components/FullWidthGrid'
-import AlertDialog from '../components/AlertDialog'
+import CharacterDialog from '../components/CharacterDialog'
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import {
@@ -58,7 +58,7 @@ export default function Characters() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Container>
-        <Grid justify="center">
+        <Grid>
           <h1>Rick and Morty</h1>
         </Grid>
         <FullWidthGrid
@@ -80,7 +80,7 @@ export default function Characters() {
           Material Button
         </Button>
       </Container>
-      <AlertDialog
+      <CharacterDialog
         data={dialogData}
         handleClose={closeDialog}
         open={isDialogOpen}

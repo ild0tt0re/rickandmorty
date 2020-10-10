@@ -3,12 +3,10 @@ import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
-import DialogTitle from '@material-ui/core/DialogTitle'
 import ScrollableTabs from './ScrollableTabs'
 import BadgeAvatar from './BadgeAvatar'
 
-export default function AlertDialog({ data, open, handleClose }) {
+export default function CharacterDialog({ data, open, handleClose }) {
   const { info, locations, episodes } = data || {}
 
   console.log('dialogData: ', data)
@@ -21,7 +19,6 @@ export default function AlertDialog({ data, open, handleClose }) {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        {/* <DialogTitle id="alert-dialog-title">{info.name}</DialogTitle> */}
         <DialogContent>
           <BadgeAvatar image={info.image} altImage={info.name} />
           <h3>{info.name}</h3>
@@ -30,9 +27,6 @@ export default function AlertDialog({ data, open, handleClose }) {
             locations={locations}
             episodes={episodes}
           />
-          {/* <DialogContentText id="alert-dialog-description">
-            Questo è un messaggio di testo
-          </DialogContentText> */}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary" autoFocus>

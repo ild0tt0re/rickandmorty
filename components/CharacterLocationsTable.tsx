@@ -7,6 +7,7 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
+import { create } from 'domain'
 
 const useStyles = makeStyles({
   table: {
@@ -14,23 +15,32 @@ const useStyles = makeStyles({
   },
 })
 
-function createData(
-  name: string,
-  origin: string,
-  location: string,
-) {
-  return { name, origin, location }
+function createData(name: string, location: string, origin: string,) {
+  if (origin) {
+    return { name, location, origin }
+  } 
+  return { name, location }
 }
 
-const rows = [
-  createData('Name', 'Worldender\'s lair', 'Bird World'),
-  createData('Type', 'Planet', 'Planet'),
-  createData('Dimension', 'Replacement Dimension', 'unknown'),
-  createData('Residents', '9', '18'),
-]
-
-export default function BasicTable() {
+export default function CharacterLocationsTable({ locations }) {
   const classes = useStyles()
+
+  let rows = []
+
+  const buildLocationsTable = (locations) => {
+    let tempRows = []
+
+    for (let i = 0; i < locations?.location?.length; i++) {
+      const name = locations?.location[i]?.name
+      const locationValue = locations?.location[i]?.value
+      const originValue = locations?.origin && locations?.origin[i]?.value
+      tempRows.push(createData(name, locationValue, originValue))
+    }
+
+    return tempRows
+  }
+
+  rows = [...buildLocationsTable(locations)]
 
   return (
     <TableContainer component={Paper}>
@@ -38,7 +48,7 @@ export default function BasicTable() {
         <TableHead>
           <TableRow>
             <TableCell>Data</TableCell>
-            <TableCell align="right">Origin</TableCell>
+            {locations?.origin && <TableCell align="right">Origin</TableCell>}
             <TableCell align="right">Location</TableCell>
           </TableRow>
         </TableHead>
@@ -48,7 +58,7 @@ export default function BasicTable() {
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
-              <TableCell align="right">{row.origin}</TableCell>
+              {locations?.origin && <TableCell align="right">{row.origin}</TableCell>}
               <TableCell align="right">{row.location}</TableCell>
             </TableRow>
           ))}

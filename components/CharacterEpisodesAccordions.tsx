@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-export default function ControlledAccordions() {
+export default function CharacterEpisodesAccordions({episodes}) {
   const classes = useStyles()
   const [expanded, setExpanded] = React.useState<string | false>(false)
 
@@ -54,7 +54,7 @@ export default function ControlledAccordions() {
         </AccordionSummary>
         <AccordionDetails className={classes.accordionDetails}>
           <Typography>
-            <SimpleList />
+            <SimpleList items={episodes} />
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -74,7 +74,7 @@ export default function ControlledAccordions() {
         </AccordionSummary>
         <AccordionDetails className={classes.accordionDetails}>
           <Typography>
-            <SimpleList />
+            <SimpleList items={episodes} />
           </Typography>
         </AccordionDetails>
       </Accordion>
