@@ -1,65 +1,82 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import { useRouter } from 'next/router'
 
 export default function Home() {
+  const router = useRouter()
+
+  const handleClick = (e) => {
+    e.preventDefault()
+    router.push('/characters')
+  }
+
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+    <>
+      <div className="container">
+        <Head>
+          <title>Create Next App</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+        <main>
+          <button className="btn btn-effect" onClick={handleClick}>See all characters</button>
+        </main>
+      </div>
+      <style jsx>{`
+        .container {
+          height: 100vh;
+          background: url(https://dslv9ilpbe7p1.cloudfront.net/aEdppypW81E_v6Nfl-rIbA_store_banner_image.jpeg);
+          background-size: cover;
+          background-position: center;
+        }
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+        main {
+          height: 100%;
+          align-items: flex-end;
+          display: flex;
+        }
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+        .btn {
+          box-sizing: border-box;
+          appearance: none;
+          background-color: transparent;
+          border: 2px solid #255229;
+          border-radius: 0.6em;
+          color: #255229;
+          cursor: pointer;
+          display: flex;
+          align-self: center;
+          font-size: 1rem;
+          font-weight: 400;
+          line-height: 1;
+          margin: 20px auto;
+          padding: 1.2em 2.8em;
+          text-decoration: none;
+          text-align: center;
+          text-transform: uppercase;
+          font-family: 'Montserrat', sans-serif;
+          font-weight: 700;
+        }
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+        .btn:hover,
+        .btn:focus {
+          color: #fff;
+          outline: 0;
+        }
+        .btn-effect {
+          border-color: #a7ff3e;
+          color: #255229;
+          box-shadow: 0 0 40px 40px #a7ff3e inset, 0 0 0 0 #a7ff3e;
+          transition: all 150ms ease-in-out;
+        }
+        .btn-effect:hover {
+          box-shadow: 0 0 10px 0 #a7ff3e inset, 0 0 10px 4px #a7ff3e;
+        }
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
+        @media screen and (min-width: 600px) {
+          .container {
+          }
+        }
+      `}</style>
+    </>
   )
 }
