@@ -20,7 +20,7 @@ export default function CharacterDialog({ data, open, handleClose }) {
         aria-describedby="alert-dialog-description"
       >
         <DialogContent>
-          <BadgeAvatar image={info.image} altImage={info.name} />
+          <BadgeAvatar image={info.image} altImage={info.name} status={info.status} />
           <h3>{info.name}</h3>
           <ScrollableTabs
             info={info}

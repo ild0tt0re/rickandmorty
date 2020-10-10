@@ -72,13 +72,6 @@ export default function Characters() {
           classes={{ul: classes.ul}}
           className={classes.root}
         />
-        <Button
-          onClick={() => openDialog({}, [1, 2], [1, 2])}
-          variant="contained"
-          color="primary"
-        >
-          Material Button
-        </Button>
       </Container>
       <CharacterDialog
         data={dialogData}

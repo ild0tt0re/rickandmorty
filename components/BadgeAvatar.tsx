@@ -8,41 +8,6 @@ import {
   createStyles,
 } from '@material-ui/core/styles'
 
-const StyledBadge = withStyles((theme: Theme) =>
-  createStyles({
-    badge: {
-      backgroundColor: '#44b700',
-      color: '#44b700',
-      height: '18px',
-      padding: '0',
-      minWidth: '18px',
-      borderRadius: '50%',
-      boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
-      '&::after': {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        borderRadius: '50%',
-        animation: '$ripple 1.2s infinite ease-in-out',
-        border: '1px solid currentColor',
-        content: '""',
-      },
-    },
-    '@keyframes ripple': {
-      '0%': {
-        transform: 'scale(.8)',
-        opacity: 1,
-      },
-      '100%': {
-        transform: 'scale(2.4)',
-        opacity: 0,
-      },
-    },
-  })
-)(Badge)
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -68,7 +33,49 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-export default function BadgeAvatars({ image, altImage }) {
+const mapStatusColor = {
+  'Alive': '#44b700',
+  'Dead': 'red',
+  'unknown': 'grey',
+}
+
+export default function BadgeAvatars({ image, altImage, status }) {
+  const StyledBadge = withStyles((theme: Theme) =>
+    createStyles({
+      badge: {
+        backgroundColor: status ? mapStatusColor[status] : 'grey',
+        color: status ? mapStatusColor[status] : 'grey',
+        height: '18px',
+        padding: '0',
+        minWidth: '18px',
+        borderRadius: '50%',
+        boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+        '&::after': {
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          borderRadius: '50%',
+          animation: '$ripple 1.2s infinite ease-in-out',
+          border: '1px solid currentColor',
+          content: '""',
+        },
+      },
+      '@keyframes ripple': {
+        '0%': {
+          transform: 'scale(.8)',
+          opacity: 1,
+        },
+        '100%': {
+          transform: 'scale(2.4)',
+          opacity: 0,
+        },
+      },
+    })
+  )(Badge)
+
+
   const classes = useStyles()
 
   return (

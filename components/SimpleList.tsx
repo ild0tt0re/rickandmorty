@@ -16,8 +16,10 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: 'auto',
     },
     '@media screen and (min-width: 600px)': {
-      width: 380,
-    }
+      root: {
+        width: 400,
+      },
+    },
   })
 )
 
@@ -33,7 +35,7 @@ export default function SimpleList({ items }) {
               <ListItemText primary={item?.name} />
               {item?.value}
             </ListItem>
-            {index < (items?.length-1) &&  <Divider />}
+            {index < items?.length - 1 && <Divider />}
           </>
         ))}
       </List>
