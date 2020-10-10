@@ -47,7 +47,7 @@ export default function CharacterLocationsTable({ locations }) {
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Data</TableCell>
+            <TableCell></TableCell>
             {locations?.origin && <TableCell align="right">Origin</TableCell>}
             <TableCell align="right">Location</TableCell>
           </TableRow>
@@ -56,7 +56,7 @@ export default function CharacterLocationsTable({ locations }) {
           {rows.map((row) => (
             <TableRow key={row.name}>
               <TableCell component="th" scope="row">
-                {row.name}
+                <b>{row.name}:</b>
               </TableCell>
               {locations?.origin && <TableCell align="right">{row.origin}</TableCell>}
               <TableCell align="right">{row.location}</TableCell>

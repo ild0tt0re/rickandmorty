@@ -32,7 +32,7 @@ export default function SimpleList({ items }) {
         {items?.map((item, index) => (
           <div key={index}>
             <ListItem button>
-              <ListItemText primary={item?.name} />
+              <ListItemText primary={<b>{item?.name}:</b>} />
               {item?.value}
             </ListItem>
             {index < items?.length - 1 && <Divider />}
