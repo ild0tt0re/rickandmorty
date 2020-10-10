@@ -26,14 +26,14 @@ export default function SimpleList({ items }) {
 
   return (
     <div className={classes.root}>
-      <List component="nav" aria-label={items.name}>
-        {items.map((item, index) => (
+      <List component="nav" aria-label={items?.name}>
+        {items?.map((item, index) => (
           <>
             <ListItem button>
-              <ListItemText primary={item.name} />
-              {item.value}
+              <ListItemText primary={item?.name} />
+              {item?.value}
             </ListItem>
-            {index < (items.length-1) &&  <Divider />}
+            {index < (items?.length-1) &&  <Divider />}
           </>
         ))}
       </List>

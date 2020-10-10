@@ -73,19 +73,6 @@ export default function ScrollableTabs({ info, locations, episodes }) {
     { name: 'location', value: info.location.name },
   ]
 
-  var location = {
-    id: 20,
-    name: 'Earth (Replacement Dimension)',
-    type: 'Planet',
-    dimension: 'Replacement Dimension',
-    residents: [
-      'https://rickandmortyapi.com/api/character/592',
-      'https://rickandmortyapi.com/api/character/667',
-    ],
-    url: 'https://rickandmortyapi.com/api/location/20',
-    created: '2017-11-18T19:33:01.173Z',
-  }
-
   function buildCharacterLocations(locations) {
     if (locations && !Array.isArray(locations)) {
       return {
@@ -99,7 +86,7 @@ export default function ScrollableTabs({ info, locations, episodes }) {
       }
     }
 
-    const characterLocation = locations[0] 
+    const characterLocation = locations[0]
     const characterOrigin = locations[1]
     return {
       location: [
@@ -120,6 +107,33 @@ export default function ScrollableTabs({ info, locations, episodes }) {
   }
 
   const characterLocations = buildCharacterLocations(locations)
+
+  const buildCharacterEpisodesList = (episodes) => {
+    function buildEpisodeItem(item) {
+      return {
+        id: item.id,
+        title: item.name,
+        list: [
+          { name: 'id', value: item.id },
+          { name: 'name', value: item.name },
+          { name: 'date', value: item.air_date },
+          { name: 'episode code', value: item.episode },
+          { name: '#characters', value: item.characters?.length },
+        ],
+      }
+    }
+
+
+    if (!Array.isArray(episodes)) {
+      return [buildEpisodeItem(episodes)]
+    }
+    return (
+      episodes &&
+      episodes.map((item) => (buildEpisodeItem(item)))
+    )
+  }
+
+  const characterEpisodes = buildCharacterEpisodesList(episodes)
 
   return (
     <div className={classes.root}>
@@ -144,15 +158,12 @@ export default function ScrollableTabs({ info, locations, episodes }) {
             <SimpleList items={characterInfoList} />
           </CardContent>
         </Card>
-        <pre>{JSON.stringify(info, null, 4)}</pre>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <CharacterLocationsTable locations={characterLocations} />
-        <pre>{JSON.stringify(locations, null, 4)}</pre>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <CharacterEpisodesAccordions episodes={episodes} />
-        <pre>{JSON.stringify(episodes, null, 4)}</pre>
+        <CharacterEpisodesAccordions episodes={characterEpisodes} />
       </TabPanel>
     </div>
   )

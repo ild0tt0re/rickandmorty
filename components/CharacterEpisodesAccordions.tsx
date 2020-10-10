@@ -23,11 +23,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     accordionDetails: {
       justifyContent: 'center',
-    }
+    },
   })
 )
 
-export default function CharacterEpisodesAccordions({episodes}) {
+export default function CharacterEpisodesAccordions({ episodes }) {
   const classes = useStyles()
   const [expanded, setExpanded] = React.useState<string | false>(false)
 
@@ -40,44 +40,26 @@ export default function CharacterEpisodesAccordions({episodes}) {
 
   return (
     <div className={classes.root}>
-      <Accordion
-        expanded={expanded === 'panel1'}
-        onChange={handleChange('panel1')}
-      >
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1bh-content"
-          id="panel1bh-header"
+      {episodes.map((episode) => (
+        <Accordion
+          expanded={expanded === episode.id}
+          onChange={handleChange(episode.id)}
         >
-          <Typography className={classes.heading}>#1</Typography>
-          <Typography className={classes.secondaryHeading}>Pilot</Typography>
-        </AccordionSummary>
-        <AccordionDetails className={classes.accordionDetails}>
-          <Typography>
-            <SimpleList items={episodes} />
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion
-        expanded={expanded === 'panel2'}
-        onChange={handleChange('panel2')}
-      >
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2bh-content"
-          id="panel2bh-header"
-        >
-          <Typography className={classes.heading}>#2</Typography>
-          <Typography className={classes.secondaryHeading}>
-            Lawnmower Dog
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails className={classes.accordionDetails}>
-          <Typography>
-            <SimpleList items={episodes} />
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls={`panel${episode.id}-content`}
+            id={episode.id}
+          >
+            <Typography className={classes.heading}>#{episode.id}</Typography>
+            <Typography className={classes.secondaryHeading}>
+              {episode.title}
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails className={classes.accordionDetails}>
+            <SimpleList items={episode?.list} />
+          </AccordionDetails>
+        </Accordion>
+      ))}
     </div>
   )
 }
