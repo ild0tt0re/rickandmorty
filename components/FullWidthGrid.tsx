@@ -21,6 +21,10 @@ const useStyles = makeStyles((theme: Theme) =>
     icon: {
       color: 'rgba(255, 255, 255, 0.54)',
     },
+    bgPlaceholder: {
+      backgroundImage: 'url(/placeholder.jpg)',
+      backgroundSize: 'cover',
+    }
   })
 )
 
@@ -58,7 +62,7 @@ export default function FullWidthGrid({ items = [], handleDialogOpen }) {
       <Grid container spacing={2}>
         {items.map((item) => (
           <Grid item xs={6} sm={4} md={3} lg={2} key={item.id}>
-            <GridListTile component="div" onClick={() => openDialog(item)}>
+            <GridListTile component="div" onClick={() => openDialog(item)} className={classes.bgPlaceholder}>
               {item.image ? (
                 <img
                   src="/placeholder.jpg"
