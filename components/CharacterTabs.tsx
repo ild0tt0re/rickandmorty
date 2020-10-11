@@ -3,7 +3,6 @@ import { makeStyles, Theme } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
-import Typography from '@material-ui/core/Typography'
 import Box from '@material-ui/core/Box'
 import SimpleList from './SimpleList'
 import CharacterLocationsTable from './CharacterLocationsTable'
@@ -47,7 +46,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }))
 
-export default function ScrollableTabs({ info, locations, episodes }) {
+export default function CharacterTabs({ info, locations, episodes }) {
   const classes = useStyles()
   const [value, setValue] = React.useState(0)
 
@@ -65,64 +64,6 @@ export default function ScrollableTabs({ info, locations, episodes }) {
     { name: 'origin', value: info.origin.name },
     { name: 'location', value: info.location.name },
   ]
-
-  function buildCharacterLocations(locations) {
-    if (locations && !Array.isArray(locations)) {
-      return {
-        location: [
-          { name: 'id', value: locations.id },
-          { name: 'name', value: locations.name },
-          { name: 'type', value: locations.type },
-          { name: 'dimension', value: locations.dimension },
-          { name: 'residents', value: locations.residents?.length },
-        ],
-      }
-    }
-
-    const characterLocation = locations[0]
-    const characterOrigin = locations[1]
-    return {
-      location: [
-        { name: 'id', value: characterLocation.id },
-        { name: 'name', value: characterLocation.name },
-        { name: 'type', value: characterLocation.type },
-        { name: 'dimension', value: characterLocation.dimension },
-        { name: 'residents', value: characterLocation.residents.length },
-      ],
-      origin: [
-        { name: 'id', value: characterOrigin.id },
-        { name: 'name', value: characterOrigin.name },
-        { name: 'type', value: characterOrigin.type },
-        { name: 'dimension', value: characterOrigin.dimension },
-        { name: 'residents', value: characterOrigin.residents.length },
-      ],
-    }
-  }
-
-  const characterLocations = buildCharacterLocations(locations)
-
-  const buildCharacterEpisodesList = (episodes) => {
-    function buildEpisodeItem(item) {
-      return {
-        id: item.id,
-        title: item.name,
-        list: [
-          { name: 'id', value: item.id },
-          { name: 'name', value: item.name },
-          { name: 'date', value: item.air_date },
-          { name: 'episode code', value: item.episode },
-          { name: '#characters', value: item.characters?.length },
-        ],
-      }
-    }
-
-    if (!Array.isArray(episodes)) {
-      return [buildEpisodeItem(episodes)]
-    }
-    return episodes && episodes.map((item) => buildEpisodeItem(item))
-  }
-
-  const characterEpisodes = buildCharacterEpisodesList(episodes)
 
   return (
     <div className={classes.root}>
@@ -149,10 +90,10 @@ export default function ScrollableTabs({ info, locations, episodes }) {
         </Card>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <CharacterLocationsTable locations={characterLocations} />
+        <CharacterLocationsTable locations={locations} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <CharacterEpisodesAccordions episodes={characterEpisodes} />
+        <CharacterEpisodesAccordions episodes={episodes} />
       </TabPanel>
     </div>
   )

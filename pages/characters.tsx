@@ -1,15 +1,10 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import {
-  Container,
-  createStyles,
-  makeStyles,
-  Theme,
-} from '@material-ui/core'
+import { Container, createStyles, makeStyles, Theme } from '@material-ui/core'
 import Pagination from '@material-ui/lab/Pagination'
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import 'lazysizes';
+import 'lazysizes'
 import FullWidthGrid from '../components/FullWidthGrid'
 import CharacterDialog from '../components/CharacterDialog'
 import {
@@ -66,21 +61,21 @@ export default function Characters() {
     dispatch(fetchPageIfNeeded(1))
   }, [])
 
-  console.log('CurrentPageData: ', currentPageData)
-
   const onPageChange = (event: object, page: number) => {
     dispatch(pageChange(page))
-    console.log('page: ', page)
   }
 
   const openDialog = (characterInfo, locationIds, episodeIds) => {
-    console.log('currentPageData: ', currentPageData)
     dispatch(openDialogIfNeeded(characterInfo, locationIds, episodeIds))
   }
 
   function closeDialog() {
     dispatch(closeDialogIfNeeded())
   }
+
+  const { info, locations, episodes } = dialogData || {}
+  const characterLocations = buildCharacterLocations(locations)
+  const characterEpisodes = buildCharacterEpisodesList(episodes)
 
   return (
     <>
@@ -109,9 +104,11 @@ export default function Characters() {
         className={classes.root}
       />
       <CharacterDialog
-        data={dialogData}
-        handleClose={closeDialog}
+        info={info}
+        locations={characterLocations}
+        episodes={characterEpisodes}
         open={isDialogOpen}
+        handleClose={closeDialog}
       />
 
       <style jsx>{`
@@ -127,4 +124,60 @@ export default function Characters() {
       `}</style>
     </>
   )
+}
+
+// PRIVATE METHODS
+
+function buildCharacterLocations(locations) {
+  if (locations && !Array.isArray(locations)) {
+    return {
+      location: [
+        { name: 'id', value: locations.id },
+        { name: 'name', value: locations.name },
+        { name: 'type', value: locations.type },
+        { name: 'dimension', value: locations.dimension },
+        { name: 'residents', value: locations.residents?.length },
+      ],
+    }
+  }
+
+  const characterLocation = locations[0]
+  const characterOrigin = locations[1]
+  return {
+    location: [
+      { name: 'id', value: characterLocation.id },
+      { name: 'name', value: characterLocation.name },
+      { name: 'type', value: characterLocation.type },
+      { name: 'dimension', value: characterLocation.dimension },
+      { name: 'residents', value: characterLocation.residents.length },
+    ],
+    origin: [
+      { name: 'id', value: characterOrigin.id },
+      { name: 'name', value: characterOrigin.name },
+      { name: 'type', value: characterOrigin.type },
+      { name: 'dimension', value: characterOrigin.dimension },
+      { name: 'residents', value: characterOrigin.residents.length },
+    ],
+  }
+}
+
+function buildCharacterEpisodesList(episodes) {
+  function buildEpisodeItem(item) {
+    return {
+      id: item.id,
+      title: item.name,
+      list: [
+        { name: 'id', value: item.id },
+        { name: 'name', value: item.name },
+        { name: 'date', value: item.air_date },
+        { name: 'episode code', value: item.episode },
+        { name: '#characters', value: item.characters?.length },
+      ],
+    }
+  }
+
+  if (!Array.isArray(episodes)) {
+    return [buildEpisodeItem(episodes)]
+  }
+  return episodes && episodes.map((item) => buildEpisodeItem(item))
 }

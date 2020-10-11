@@ -1,12 +1,5 @@
 import * as types from './types'
 
-// INITIALIZES CLOCK ON SERVER
-export const serverRenderClock = () => (dispatch) =>
-  dispatch({
-    type: types.TICK,
-    payload: { light: false, ts: Date.now() },
-  })
-
 //  PAGE | ACTION CREATORS
 const onPageChange = (page) => {
   return {

@@ -3,7 +3,7 @@ import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
-import ScrollableTabs from './ScrollableTabs'
+import CharacterTabs from './CharacterTabs'
 import BadgeAvatar from './BadgeAvatar'
 import { createStyles, makeStyles, Theme } from '@material-ui/core'
 
@@ -20,12 +20,8 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-export default function CharacterDialog({ data, open, handleClose }) {
-  const { info, locations, episodes } = data || {}
+export default function CharacterDialog({ info, locations, episodes, open, handleClose }) {
   const classes = useStyles()
-
-  console.log('dialogData: ', data)
-
 
   return (
     <>
@@ -39,7 +35,7 @@ export default function CharacterDialog({ data, open, handleClose }) {
         <DialogContent>
           <BadgeAvatar image={info.image} altImage={info.name} status={info.status} />
           <h3>{info.name}</h3>
-          <ScrollableTabs
+          <CharacterTabs
             info={info}
             locations={locations}
             episodes={episodes}
