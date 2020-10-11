@@ -57,13 +57,22 @@ export default function FullWidthGrid({ items = [], handleDialogOpen }) {
     <div className={classes.root}>
       <Grid container spacing={2}>
         {items.map((item) => (
-          <Grid item xs={6} sm={4} md={3} lg={2} key={item.id} >
+          <Grid item xs={6} sm={4} md={3} lg={2} key={item.id}>
             <GridListTile component="div" onClick={() => openDialog(item)}>
-              <img
-                src={item.image}
-                alt={item.title}
-                className={classes.image}
-              />
+              {item ? (
+                <img
+                  src="/placeholder.jpeg"
+                  data-src={item.image}
+                  alt={item.title}
+                  className={classes.image + ' lazyload'}
+                />
+              ) : (
+                <img
+                  src="/placeholder.jpg"
+                  alt={item.title}
+                  className={classes.image + ' lazyload'}
+                />
+              )}
               <GridListTileBar
                 title={item.name}
                 subtitle={<span>From: {item.location?.name}</span>}

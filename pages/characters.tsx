@@ -1,22 +1,23 @@
-import Pagination from '@material-ui/lab/Pagination'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import {
   Container,
   createStyles,
   makeStyles,
   Theme,
 } from '@material-ui/core'
-import FullWidthGrid from '../components/FullWidthGrid'
-import CharacterDialog from '../components/CharacterDialog'
+import Pagination from '@material-ui/lab/Pagination'
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import 'lazysizes';
+import FullWidthGrid from '../components/FullWidthGrid'
+import CharacterDialog from '../components/CharacterDialog'
 import {
   closeDialogIfNeeded,
   fetchPageIfNeeded,
   openDialogIfNeeded,
   pageChange,
 } from '../redux/actions'
-import { useRouter } from 'next/router'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
