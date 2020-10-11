@@ -3,7 +3,6 @@ import Head from 'next/head'
 import {
   Container,
   createStyles,
-  Grid,
   makeStyles,
   Theme,
 } from '@material-ui/core'
@@ -17,6 +16,7 @@ import {
   openDialogIfNeeded,
   pageChange,
 } from '../redux/actions'
+import { useRouter } from 'next/router'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -25,17 +25,25 @@ const useStyles = makeStyles((theme: Theme) =>
       position: 'sticky',
       padding: 12,
       bottom: 0,
-      backgroundColor: 'white',
+      backgroundColor: theme.palette.background.default,
       boxShadow: '0 -1px 51px 0px rgba(0,0,0,0.55)',
+    },
+    nav: {
+      position: 'sticky',
+      top: 0,
+      zIndex: 10,
+      backgroundColor: theme.palette.background.default,
+      boxShadow: '0 2px 20px 0px rgba(0,0,0,0.55)',
     },
     ul: {
       justifyContent: 'center',
     },
     container: {
-      paddingLeft: '24px',
-      paddingRight: '24px',
+      paddingLeft: 24,
+      paddingRight: 24,
+      marginTop: 20,
       minHeight: '100vh',
-    }
+    },
   })
 )
 
@@ -46,6 +54,12 @@ export default function Characters() {
   const isDialogOpen = useSelector((state) => state.isDialogOpen || false)
   const dialogData = useSelector((state) => state.dialogData)
   const dispatch = useDispatch()
+  const router = useRouter()
+
+  const handleClickToHome = (e) => {
+    e.preventDefault()
+    router.push('/')
+  }
 
   useEffect(() => {
     dispatch(fetchPageIfNeeded(1))
@@ -73,10 +87,14 @@ export default function Characters() {
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <nav className={classes.nav}>
+        <img
+          onClick={handleClickToHome}
+          src="/logo-rickandmorty.png"
+          alt="rickandmorty logo"
+        />
+      </nav>
       <Container className={classes.container}>
-        <Grid>
-          <h1>Rick and Morty</h1>
-        </Grid>
         <FullWidthGrid
           items={currentPageData?.characters}
           handleDialogOpen={openDialog}
@@ -96,17 +114,14 @@ export default function Characters() {
       />
 
       <style jsx>{`
-        h1 {
-          text-align: center;
-        }
-        .pagination {
-          justify-content: center;
+        img {
+          display: block;
+          margin: 0 auto;
+          padding: 10px 10px 11px;
+          cursor: pointer;
         }
 
         @media screen and (min-width: 600px) {
-          img {
-            width: 200px;
-          }
         }
       `}</style>
     </>

@@ -24,7 +24,7 @@ export default function Home() {
       <style jsx>{`
         .container {
           height: 100vh;
-          background: url(https://dslv9ilpbe7p1.cloudfront.net/aEdppypW81E_v6Nfl-rIbA_store_banner_image.jpeg);
+          background: url(/rickandmorty-wallpaper.jpeg);
           background-size: cover;
           background-position: center;
         }
@@ -69,7 +69,8 @@ export default function Home() {
           transition: all 150ms ease-in-out;
         }
         .btn-effect:hover {
-          box-shadow: 0 0 10px 0 #a7ff3e inset, 0 0 10px 4px #a7ff3e;
+          box-shadow: 0px 0 40px 20px #a7ff3e inset, 0 0 10px 4px #a7ff3e;
+          color:  black;
         }
 
         @media screen and (min-width: 600px) {
