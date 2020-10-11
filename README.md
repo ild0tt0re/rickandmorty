@@ -1,30 +1,63 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# REACT PROJECT | RICKYANDMORTY
 
-## Getting Started
+![rickyandmorty project's image preview](./rickyandmorty-preview.png)
 
-First, run the development server:
+## HOW TO USE
 
+### 1. Install all dependencies: 
 ```bash
-npm run dev
-# or
-yarn dev
+$ yarn 
+# or 
+$ npm install
 ```
 
+### 2. Run the project in dev mode:
+```bash
+$ yarn dev
+# or
+npm run dev
+```
+
+### 3. Open Browser
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
-## Learn More
+## Technology Stack
 
-To learn more about Next.js, take a look at the following resources:
+*React Project* build with 
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **NextJS**: react framework
+- **TypeScript**
+- **Redux**: state management library
+- **Redux-thunk**
+- **Material-UI**: component library
+- **lazysizes**: lazy loading images
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## PROJECT OVERVIEW
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Using the [Rick & Morty API](rickandmortyapi.com) display the profiles of the characters (either
+with pagination or showing the first page only).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The API provides REST and GraphQL versions, for this exercise **you should use the REST
+version.**
+
+You are free to use any library/framework or even language. Be ready to explain the rationale
+for your choices.
+
+
+### Main User Stories
+| US | Description |
+| :------------ | :----------- |
+| **#1**: |  The profile of a character should include **Image** |
+| **#2**: | The profile of a character should include **Character information** (`name`, `species`, `etc..`) |
+| **#3**: | The profile of a character should include **Origin and location information** (`name`, `dimension`, `amount of residents`, `etc..`). |
+| **#4**: | The profile of a character should include **Name of the chapters** the character is featured on. |
+
+
+### Deployment
+
+- The exercise should be submitted in a public repository. 
+- Make sure that running your solution requires no global dependencies (besides node/npm/yarn) and it's possible to run it with only one command (besides yarn/npm install).
+
+> Write the code with production standards in mind.
