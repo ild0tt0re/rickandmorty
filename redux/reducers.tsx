@@ -1,39 +1,5 @@
-import { type } from 'os'
 import { combineReducers } from 'redux'
 import * as types from './types'
-
-// COUNTER REDUCER
-const counterReducer = (state = 0, { type }) => {
-  switch (type) {
-    case types.INCREMENT:
-      return state + 1
-    case types.DECREMENT:
-      return state - 1
-    case types.RESET:
-      return 0
-    default:
-      return state
-  }
-}
-
-// INITIAL TIMER STATE
-const initialTimerState = {
-  lastUpdate: 0,
-  light: false,
-}
-
-// TIMER REDUCER
-const timerReducer = (state = initialTimerState, { type, payload }) => {
-  switch (type) {
-    case types.TICK:
-      return {
-        lastUpdate: payload.ts,
-        light: !!payload.light,
-      }
-    default:
-      return state
-  }
-}
 
 function selectedPage(state = 1, action) {
   switch (action.type) {
@@ -97,23 +63,23 @@ const initialDialogState = {
 function dialogData(state = initialDialogState, action) {
   switch (action.type) {
     case types.DIALOG_INFO: {
-      let newState = { 
+      let newState = {
         ...state,
-        info: action.payload 
+        info: action.payload,
       }
       return newState
     }
     case types.DIALOG_LOCATIONS: {
-      let newState = { 
+      let newState = {
         ...state,
-        locations: action.payload 
+        locations: action.payload,
       }
       return newState
     }
     case types.DIALOG_EPISODES: {
-      let newState = { 
+      let newState = {
         ...state,
-        episodes: action.payload 
+        episodes: action.payload,
       }
       return newState
     }
@@ -122,7 +88,18 @@ function dialogData(state = initialDialogState, action) {
   }
 }
 
-function locationsReducer(state = {}, action) {
+const getArrayPayload = (action) => {
+  if (Array.isArray(action.payload)) {
+    return action?.payload
+  }
+  return [action.payload]
+}
+
+const initialLocationsState = {
+  data: [],
+}
+
+function locationsReducer(state = initialLocationsState, action) {
   switch (action.type) {
     case types.INVALIDATE_LOCATIONS:
     case types.REQUEST_LOCATIONS:
@@ -130,7 +107,7 @@ function locationsReducer(state = {}, action) {
     case types.RECEIVE_LOCATIONS:
       const newState = {
         ...state,
-        data: action.payload,
+        data: [...state.data, ...getArrayPayload(action)],
       }
       return newState
     default:
@@ -138,8 +115,24 @@ function locationsReducer(state = {}, action) {
   }
 }
 
-function episodesReducer(state = [], action) {
-  return state
+const initialEpisodesState = {
+  data: [],
+}
+
+function episodesReducer(state = initialEpisodesState, action) {
+  switch (action.type) {
+    case types.INVALIDATE_EPISODES:
+    case types.REQUEST_EPISODES:
+      return requestHandler(state, action)
+    case types.RECEIVE_EPISODES:
+      const newState = {
+        ...state,
+        data: [...state.data, ...getArrayPayload(action)],
+      }
+      return newState
+    default:
+      return state
+  }
 }
 
 function requestHandler(state, action) {
@@ -177,8 +170,6 @@ function dialogState(state = false, action) {
 
 // COMBINED REDUCERS
 const reducers = {
-  counter: counterReducer,
-  timer: timerReducer,
   pages: charactersByPage,
   currentPage: selectedPage,
   dialogData: dialogData,

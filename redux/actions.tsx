@@ -105,25 +105,65 @@ const requestLocations = (locationIds) => {
   }
 }
 
-export const fetchLocations = (locationIds, episodeIds) => {
-  return (dispatch) => {
-    dispatch(requestLocations(locationIds))
-    fetch(
-      `https://rickandmortyapi.com/api/location/${locationIds.join(',') || 1}`
-    )
-      .then((response) => response.json())
-      .then((json) => {
-        dispatch(receiveLocations(locationIds, json))
-        dispatch(dialogLocations(json))
-      })
-    return fetch(
-      `https://rickandmortyapi.com/api/episode/${episodeIds.join(',') || 1}`
-    )
-      .then((response) => response.json())
-      .then((json) => {
-        dispatch(receiveLocations(locationIds, json))
-        dispatch(dialogEpisodes(json))
-      })
+const fetchLocations = (dispatch, locationIds) => {
+  dispatch(requestLocations(locationIds))
+  fetch(
+    `https://rickandmortyapi.com/api/location/${locationIds.join(',') || 1}`
+  )
+    .then((response) => response.json())
+    .then((json) => {
+      dispatch(receiveLocations(locationIds, json))
+      dispatch(dialogLocations(json))
+    })
+}
+
+const fetchEpisodes = (dispatch, episodeIds) => {
+  dispatch(requestEpisodes(episodeIds))
+  return fetch(
+    `https://rickandmortyapi.com/api/episode/${episodeIds.join(',') || 1}`
+  )
+    .then((response) => response.json())
+    .then((json) => {
+      dispatch(receiveEpisodes(episodeIds, json))
+      dispatch(dialogEpisodes(json))
+    })
+}
+
+const getLocationFromStore = (state, locationIds) => {
+  return state?.locations?.data?.find((item) => item.id == locationIds[0])
+}
+
+const getEpisodeFromStore = (state, episodeId) => {
+  return state?.episodes?.data?.find((item) => item.id == episodeId)
+}
+
+const episodesInStore = (state, episodeIds) => {
+  const episodesInStore = []
+  for (const id of episodeIds) {
+    const episodeInStore = getEpisodeFromStore(state, id)
+    if (!episodeInStore) {
+      return false
+    }
+    episodesInStore.push(episodeInStore)
+  }
+  return episodesInStore
+}
+
+export const shouldFetchLocationsAndEpisodes = (locationIds, episodeIds) => {
+  return (dispatch, getState) => {
+    const locationInStore = getLocationFromStore(getState(), locationIds)
+    if (!locationInStore) {
+      fetchLocations(dispatch, locationIds)
+    } else {
+      dispatch(dialogLocations(locationInStore))
+    }
+
+    const epInStore = episodesInStore(getState(), episodeIds)
+    if (!epInStore) {
+      fetchEpisodes(dispatch, episodeIds)
+    } else {
+      dispatch(dialogEpisodes(epInStore))
+    }
   }
 }
 
@@ -140,20 +180,6 @@ const requestEpisodes = (episodeIds) => {
   return {
     type: types.REQUEST_EPISODES,
     episodeIds,
-  }
-}
-
-export const fetchEpisodes = (episodeIds) => {
-  return (dispatch) => {
-    dispatch(requestEpisodes(episodeIds))
-    return fetch(
-      `https://rickandmortyapi.com/api/location/${episodeIds.join(',') || 1}`
-    )
-      .then((response) => response.json())
-      .then((json) => {
-        dispatch(receiveEpisodes(episodeIds, json))
-        dispatch(dialogEpisodes(json))
-      })
   }
 }
 
@@ -174,7 +200,7 @@ export const openDialogIfNeeded = (characterInfo, locationsId, episodeIds) => {
   return (dispatch, getState) => {
     if (!getState().isDialogOpen) {
       dispatch(dialogInfo(characterInfo))
-      dispatch(fetchLocations(locationsId, episodeIds))
+      dispatch(shouldFetchLocationsAndEpisodes(locationsId, episodeIds))
       return dispatch(openDialog())
     }
   }

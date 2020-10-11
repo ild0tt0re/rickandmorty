@@ -59,9 +59,9 @@ export default function FullWidthGrid({ items = [], handleDialogOpen }) {
         {items.map((item) => (
           <Grid item xs={6} sm={4} md={3} lg={2} key={item.id}>
             <GridListTile component="div" onClick={() => openDialog(item)}>
-              {item ? (
+              {item.image ? (
                 <img
-                  src="/placeholder.jpeg"
+                  src="/placeholder.jpg"
                   data-src={item.image}
                   alt={item.title}
                   className={classes.image + ' lazyload'}

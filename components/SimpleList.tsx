@@ -15,6 +15,9 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: theme.palette.background.paper,
       margin: 'auto',
     },
+    primary: {
+      maxWidth: '50%',
+    },
     '@media screen and (min-width: 600px)': {
       root: {
         width: 400,
@@ -32,8 +35,8 @@ export default function SimpleList({ items }) {
         {items?.map((item, index) => (
           <div key={index}>
             <ListItem button>
-              <ListItemText primary={<b>{item?.name}:</b>} />
-              {item?.value}
+              <ListItemText primary={<b>{item?.name}:</b>} className={classes.primary} />
+              <ListItemText primary={item?.value} className={classes.primary} />
             </ListItem>
             {index < items?.length - 1 && <Divider />}
           </div>

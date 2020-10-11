@@ -44,6 +44,7 @@ export default function CharacterEpisodesAccordions({ episodes }) {
         <Accordion
           expanded={expanded === episode.id}
           onChange={handleChange(episode.id)}
+          key={episode.id}
         >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
