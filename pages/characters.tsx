@@ -52,14 +52,22 @@ export default function Characters() {
   const dispatch = useDispatch()
   const router = useRouter()
 
+  useEffect(() => {
+    dispatch(fetchPageIfNeeded(1))
+  }, [])
+  
+  useEffect(() => {
+    // reset page and modal on page unmount
+    return () => {
+      dispatch(pageChange(1))
+      dispatch(closeDialogIfNeeded())
+    }
+  }, [])
+
   const handleClickToHome = (e) => {
     e.preventDefault()
     router.push('/')
   }
-
-  useEffect(() => {
-    dispatch(fetchPageIfNeeded(1))
-  }, [])
 
   const onPageChange = (event: object, page: number) => {
     dispatch(pageChange(page))
