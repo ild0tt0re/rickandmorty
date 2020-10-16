@@ -53,16 +53,21 @@ export default function Characters() {
   const router = useRouter()
 
   useEffect(() => {
-    dispatch(fetchPageIfNeeded(1))
-  }, [])
-  
-  useEffect(() => {
-    // reset page and modal on page unmount
+    //get page from queryString on first render
+    const pageFromQuery = parseInt(router.asPath.split('page=')[1]?.slice(0), 10) || 1
+    dispatch(fetchPageIfNeeded(pageFromQuery))
+    dispatch(pageChange(pageFromQuery))
+    
     return () => {
+      // reset page and modal on page unmount
       dispatch(pageChange(1))
       dispatch(closeDialogIfNeeded())
     }
   }, [])
+
+  useEffect(() => {
+    // The page changed!
+  }, [router.query.page])
 
   const handleClickToHome = (e) => {
     e.preventDefault()
@@ -70,6 +75,7 @@ export default function Characters() {
   }
 
   const onPageChange = (event: object, page: number) => {
+    router.push(`/characters?page=${page || 1}`, undefined, { shallow: true })
     dispatch(pageChange(page))
   }
 
@@ -105,6 +111,7 @@ export default function Characters() {
         />
       </Container>
       <Pagination
+        page={currentPage}
         count={currentPageData?.info?.pages}
         size="large"
         onChange={onPageChange}
