@@ -2,7 +2,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { Container, createStyles, makeStyles, Theme } from '@material-ui/core'
 import Pagination from '@material-ui/lab/Pagination'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import 'lazysizes'
 import FullWidthGrid from '../components/FullWidthGrid'
@@ -49,6 +49,7 @@ export default function Characters() {
   const currentPageData = useSelector((state) => state.pages[currentPage - 1])
   const isDialogOpen = useSelector((state) => state.isDialogOpen || false)
   const dialogData = useSelector((state) => state.dialogData)
+  const [totalPages, setTotalPages] = useState(1)
   const dispatch = useDispatch()
   const router = useRouter()
 
@@ -57,7 +58,7 @@ export default function Characters() {
     const pageFromQuery = parseInt(router.asPath.split('page=')[1]?.slice(0), 10) || 1
     dispatch(fetchPageIfNeeded(pageFromQuery))
     dispatch(pageChange(pageFromQuery))
-    
+
     return () => {
       // reset page and modal on page unmount
       dispatch(pageChange(1))
@@ -67,7 +68,13 @@ export default function Characters() {
 
   useEffect(() => {
     // The page changed!
-  }, [router.query.page])
+    if (
+      currentPageData?.info?.pages &&
+      totalPages !== currentPageData?.info?.pages
+    ) {
+      setTotalPages(currentPageData?.info?.pages)
+    }
+  }, [router.query.page, currentPageData])
 
   const handleClickToHome = (e) => {
     e.preventDefault()
@@ -112,7 +119,7 @@ export default function Characters() {
       </Container>
       <Pagination
         page={currentPage}
-        count={currentPageData?.info?.pages}
+        count={totalPages}
         size="large"
         onChange={onPageChange}
         classes={{ ul: classes.ul }}
